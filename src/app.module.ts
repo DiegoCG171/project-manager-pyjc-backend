@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
         dbName: configService.get<string>('MONGO_INITDB_NAME'),
       }),
       inject: [ConfigService]
-    })
+    }),
+    UserModule
   ],
   controllers: [],
   providers: [],
