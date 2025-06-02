@@ -50,7 +50,5 @@ networks:
     driver: bridge
 
 volumes:
-  dbdata:
-    driver: local
   mongodata:
     driver: local
