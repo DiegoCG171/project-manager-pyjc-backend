@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { AreaModule } from './area/area.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { UserModule } from './user/user.module';
       inject: [ConfigService]
     }),
     AuthModule,
-    UserModule
+    UserModule,
+    AreaModule
   ],
   controllers: [],
   providers: [],
