@@ -40,3 +40,6 @@ export class RolController {
     return this.rolService.remove(id);
   }
 }
+/* 
+  :)
+*/

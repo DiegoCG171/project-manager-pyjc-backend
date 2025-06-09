@@ -27,3 +27,6 @@ export class Rol {
   }[];
 }
 export const RolSchema = SchemaFactory.createForClass(Rol);
+/* 
+  :)
+*/

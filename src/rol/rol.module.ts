@@ -17,3 +17,6 @@ import { Rol, RolSchema } from './entities/rol.entity';
   ],
 })
 export class RolModule {}
+/* 
+  :)
+*/
