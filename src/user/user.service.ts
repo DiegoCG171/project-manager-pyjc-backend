@@ -4,15 +4,18 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
 import { Model } from 'mongoose';
+import { HashService } from 'src/auth/hash.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name)
-    private readonly userModel: Model<User>
+    private readonly userModel: Model<User>,
+    private readonly hashService: HashService
   ){}
   async create(createUserDto: CreateUserDto) {
     try{
+      createUserDto.password = await this.hashService.hashPassword(createUserDto.password)
       const user = await this.userModel.create(createUserDto);
       return user;
     }catch(error){
@@ -43,9 +46,17 @@ export class UserService {
 
   async update(id: string, updateUserDto: UpdateUserDto) {
     try{
-      const user = await this.findOne(id)
-      Object.assign(user, updateUserDto)
-      return await this.userModel.create(user)
+      const updatedUser = await this.userModel.findOneAndUpdate(
+      { uuid: id },
+      updateUserDto,
+      { new: true } // Devuelve el documento actualizado
+    ).exec();
+
+    if (!updatedUser) {
+      throw new NotFoundException(`Session with uuid ${id} not found`);
+    }
+
+    return updatedUser;
     }catch(error){
       throw error;
     }

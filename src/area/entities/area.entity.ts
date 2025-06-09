@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class Area {
 
     @Prop({ type:String, default:uuidv4})
-    id: string;
+    _id: string;
 
     @Prop({type:String})
     name: string;

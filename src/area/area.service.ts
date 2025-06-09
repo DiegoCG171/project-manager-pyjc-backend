@@ -30,11 +30,11 @@ export class AreaService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(_id: string) {
     try {
-      const area = await this.areaModel.findOne({id:id}).exec();
+      const area = await this.areaModel.findOne({ _id }).exec();
       if (!area) {
-        throw new NotFoundException(`El area con id ${id} no existe`);
+        throw new NotFoundException(`El area con id ${ _id } no existe`);
       }
       return area;
     } catch (error) {
@@ -52,11 +52,11 @@ export class AreaService {
     }
   }
 
-  async remove(id: string) {
+  async remove(_id: string) {
     try {
-      const area = await this.findOne(id)
-      await this.areaModel.deleteOne({id: area.id})
-      return { message: `El area con id ${area.id} se elimino correctamente` };
+      const area = await this.findOne(_id)
+      await this.areaModel.deleteOne({_id: area._id})
+      return { message: `El area con id ${area._id} se elimino correctamente` };
     } catch (error) {
       throw error
     }
