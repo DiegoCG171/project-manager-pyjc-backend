@@ -4,6 +4,7 @@ import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { SeedModule } from './seed/seed.module';
+import { AreaModule } from './area/area.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { SeedModule } from './seed/seed.module';
     }),
     AuthModule,
     UserModule,
-    SeedModule
+    SeedModule,
+    AreaModule
   ],
   controllers: [],
   providers: [],
