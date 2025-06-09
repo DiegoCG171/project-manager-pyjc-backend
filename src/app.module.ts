@@ -3,7 +3,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+<<<<<<< HEAD
 import { RolModule } from './rol/rol.module';
+=======
+import { AreaModule } from './area/area.module';
+>>>>>>> 4427f3fed7993584290ec30dafff2aaeab35e47e
 
 @Module({
   imports: [
@@ -25,7 +29,11 @@ import { RolModule } from './rol/rol.module';
     }),
     AuthModule,
     UserModule,
+<<<<<<< HEAD
     RolModule
+=======
+    AreaModule
+>>>>>>> 4427f3fed7993584290ec30dafff2aaeab35e47e
   ],
   controllers: [],
   providers: [],
