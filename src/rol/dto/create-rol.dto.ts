@@ -1,6 +1,14 @@
 import { IsArray, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 
+class Statements {
+  @IsString()
+  effect: string;
+
+  @IsArray()
+  actions: string;
+}
+
 export class CreateRolDto {
   @IsString()
   name: string;
@@ -10,24 +18,6 @@ export class CreateRolDto {
 
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => Object)
-  statements: {
-    @IsString()
-    effect: string;
-
-    @IsArray()
-    @IsString({ each: true })
-    actions: string[];
-  }[];
+  @Type(() => Statements)
+  statements: Statements[]
 }
-
-/*   @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => StatementDto)
-  statements: {
-    effect: string;
-    actions: string[];
-  }[];
-
-  :)
-*/
