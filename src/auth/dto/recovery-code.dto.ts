@@ -1,4 +1,4 @@
-import { IsDateString, IsNumber, IsNumberString, IsUUID, Length, Max, Min } from "class-validator";
+import { IsDateString, IsNumber, IsNumberString, IsOptional, IsUUID, Length, Max, Min } from "class-validator";
 
 export class CreateRecoveryCodeDto {
     @IsUUID(4, { message: "El usuario debe ser un uuid válido" })
@@ -9,7 +9,7 @@ export class CreateRecoveryCodeDto {
     code: string;
 
     @IsDateString()
-    date: string;
+    expiresAt: string;
 
     @IsNumber({}, { message: "El campo debe ser númerico" })
     @Min(0)

@@ -8,6 +8,7 @@ import { HashService } from './hash.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/user/entities/user.entity';
 import { RecoveryCode, RecoveryCodeSchema } from './entities/recovery-code.entity';
+import { MailSenderModule } from 'src/mail-sender/mail-sender.module';
 
 @Module({
   controllers: [AuthController],
@@ -34,7 +35,8 @@ import { RecoveryCode, RecoveryCodeSchema } from './entities/recovery-code.entit
         name: RecoveryCode.name,
         schema: RecoveryCodeSchema
       }
-    ])
+    ]),
+    MailSenderModule
   ]
 })
 export class AuthModule {}

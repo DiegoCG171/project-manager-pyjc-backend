@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { SeedModule } from './seed/seed.module';
 import { AreaModule } from './area/area.module';
+import { MailSenderModule } from './mail-sender/mail-sender.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { AreaModule } from './area/area.module';
     AuthModule,
     UserModule,
     SeedModule,
-    AreaModule
+    AreaModule,
+    MailSenderModule
   ],
   controllers: [],
   providers: [],
