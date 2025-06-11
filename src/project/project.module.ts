@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ProyectoService } from './proyecto.service';
-import { ProyectoController } from './proyecto.controller';
+import { ProyectoService } from './project.service';
+import { ProyectoController } from './project.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Proyecto, ProyectoSchema } from './entities/proyecto.entity';
 
@@ -16,4 +16,4 @@ import { Proyecto, ProyectoSchema } from './entities/proyecto.entity';
     ])
   ]
 })
-export class ProyectoModule {}
+export class ProjectModule {}

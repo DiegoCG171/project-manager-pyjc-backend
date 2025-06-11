@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ProyectoService } from './proyecto.service';
-import { CreateProyectoDto } from './dto/create-proyecto.dto';
-import { UpdateProyectoDto } from './dto/update-proyecto.dto';
+import { ProyectoService } from './project.service';
+import { CreateProyectoDto } from './dto/create-project.dto';
+import { UpdateProyectoDto } from './dto/update-project.dto';
 
-@Controller('proyecto')
+@Controller('project')
 export class ProyectoController {
   constructor(private readonly proyectoService: ProyectoService) {}
 

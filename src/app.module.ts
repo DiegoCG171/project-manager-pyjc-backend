@@ -10,7 +10,7 @@ import { SeedModule } from './seed/seed.module';
 
 import { AreaModule } from './area/area.module';
 import { MailSenderModule } from './mail-sender/mail-sender.module';
-import { ProyectoModule } from './proyecto/proyecto.module';
+import { ProjectModule } from './project/project.module';
 import { ProviderModule } from './provider/provider.module';
 import { CommentModule } from './comment/comment.module';
 
@@ -38,7 +38,7 @@ import { CommentModule } from './comment/comment.module';
     SeedModule,
     AreaModule,
     MailSenderModule,
-    ProyectoModule,
+    ProjectModule,
     ProviderModule,
     CommentModule
   ],
