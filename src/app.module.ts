@@ -10,6 +10,9 @@ import { SeedModule } from './seed/seed.module';
 
 import { AreaModule } from './area/area.module';
 import { MailSenderModule } from './mail-sender/mail-sender.module';
+import { ProyectoModule } from './proyecto/proyecto.module';
+import { ProviderModule } from './provider/provider.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -34,7 +37,10 @@ import { MailSenderModule } from './mail-sender/mail-sender.module';
     RolModule,
     SeedModule,
     AreaModule,
-    MailSenderModule
+    MailSenderModule,
+    ProyectoModule,
+    ProviderModule,
+    CommentModule
   ],
   controllers: [],
   providers: [],
