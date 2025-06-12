@@ -19,5 +19,5 @@ export class CreateRolDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => Statements)
-  statements: Statements[]
+  statements: Statements[];
 }
