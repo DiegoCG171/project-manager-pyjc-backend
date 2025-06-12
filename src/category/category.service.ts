@@ -45,12 +45,17 @@ export class CategoryService {
 
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {
     try {
-      const category = await this.findOne(id);
-      Object.assign(category, updateCategoryDto);
-      return await this.categoryModel.findByIdAndUpdate(id, UpdateCategoryDto, {
-        new: true,
-      });
+      const updatedCategory = await this.categoryModel
+        .findOneAndUpdate({ _id: id }, updateCategoryDto, { new: true })
+        .exec();
+
+      if (!updatedCategory) {
+        throw new NotFoundException(`No existe la categoria con el id ${id} `);
+      }
+
+      return updatedCategory;
     } catch (error) {
+      console.error('Error al actualizar categoría:', error);
       throw error;
     }
   }
