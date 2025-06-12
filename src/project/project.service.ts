@@ -1,19 +1,19 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateProyectoDto } from './dto/create-project.dto';
-import { UpdateProyectoDto } from './dto/update-project.dto';
 import { Model } from 'mongoose';
-import { Proyecto } from './entities/proyecto.entity';
 import { InjectModel } from '@nestjs/mongoose';
+import { Project } from './entities/project.entity';
+import { CreateProjectDto } from './dto/create-project.dto';
+import { UpdateProjectDto } from './dto/update-project.dto';
 
 @Injectable()
-export class ProyectoService {
+export class ProjectService {
   constructor(
-    @InjectModel(Proyecto.name)
-    private readonly proyectoModel:Model<Proyecto>
+    @InjectModel(Project.name)
+    private readonly projectModel:Model<Project>
   ){}
-  async create(createProyectoDto: CreateProyectoDto) {
+  async create(createProjectDto: CreateProjectDto) {
     try {
-      const proyecto = await this.proyectoModel.create(createProyectoDto);
+      const proyecto = await this.projectModel.create(createProjectDto);
       return proyecto;
     } catch (error) {
       throw error
@@ -22,7 +22,7 @@ export class ProyectoService {
 
   async findAll() {
     try {
-      const proyecto = await this.proyectoModel.find().exec();
+      const proyecto = await this.projectModel.find().exec();
       return proyecto;
     } catch (error) {
       throw error
@@ -31,7 +31,7 @@ export class ProyectoService {
 
   async findOne(_id: string) {
     try {
-      const proyecto = await this.proyectoModel.findOne({_id}).exec();
+      const proyecto = await this.projectModel.findOne({_id}).exec();
       if (!proyecto) {
         throw new NotFoundException(`El proyecto con id ${_id} no existe`);
       }
@@ -41,11 +41,11 @@ export class ProyectoService {
     }
   }
 
-  async update(_id: string, updateProyectoDto: UpdateProyectoDto) {
+  async update(_id: string, updateProjectDto: UpdateProjectDto) {
     try {
       const proyecto = await this.findOne(_id)
-      Object.assign(proyecto,updateProyectoDto)
-      return await this.proyectoModel.create(proyecto)
+      Object.assign(proyecto,updateProjectDto)
+      return await this.projectModel.create(proyecto)
     } catch (error) {
       throw error;
     }
@@ -54,7 +54,7 @@ export class ProyectoService {
   async remove(_id: string) {
     try {
       const proyecto = await this.findOne(_id)
-      await this.proyectoModel.deleteOne({_id: proyecto._id})
+      await this.projectModel.deleteOne({_id: proyecto._id})
       return {message:`El proyecto con id ${proyecto._id} se elimino corectamente`};
     } catch (error) {
       throw error

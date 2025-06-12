@@ -1,7 +1,7 @@
 import { Type } from "class-transformer";
 import { IsArray, IsDate, IsNumber, IsString } from "class-validator";
 
-export class CreateProyectoDto {
+export class CreateProjectDto {
 
     @IsString()
     name: string;
