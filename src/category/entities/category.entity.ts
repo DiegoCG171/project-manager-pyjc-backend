@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 @Schema({ timestamps: true })
 export class Category {
   @Prop({ type: String, default: uuidv4 })
-  id: string;
+  _id: string;
 
   @Prop({ type: String })
   name: string;

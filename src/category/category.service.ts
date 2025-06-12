@@ -31,7 +31,7 @@ export class CategoryService {
     }
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     try {
       const category = await this.categoryModel.findById(id).exec();
       if (!category) {
@@ -43,7 +43,7 @@ export class CategoryService {
     }
   }
 
-  async update(id: number, updateCategoryDto: UpdateCategoryDto) {
+  async update(id: string, updateCategoryDto: UpdateCategoryDto) {
     try {
       const category = await this.findOne(id);
       Object.assign(category, updateCategoryDto);
@@ -55,7 +55,7 @@ export class CategoryService {
     }
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     try {
       const category = await this.findOne(id);
       await this.categoryModel.findByIdAndDelete(id);
