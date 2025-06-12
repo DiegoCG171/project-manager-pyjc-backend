@@ -9,6 +9,7 @@ import { RolModule } from './rol/rol.module';
 import { SeedModule } from './seed/seed.module';
 
 import { AreaModule } from './area/area.module';
+import { CategoryModule } from './category/category.module';
 import { MailSenderModule } from './mail-sender/mail-sender.module';
 import { ProjectModule } from './project/project.module';
 import { ProviderModule } from './provider/provider.module';
@@ -37,10 +38,12 @@ import { CommentModule } from './comment/comment.module';
     RolModule,
     SeedModule,
     AreaModule,
+    CategoryModule,
+
     MailSenderModule,
     ProjectModule,
     ProviderModule,
-    CommentModule
+    CommentModule,
   ],
   controllers: [],
   providers: [],

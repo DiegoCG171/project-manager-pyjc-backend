@@ -2,23 +2,17 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
 @Schema({ timestamps: true })
-export class User {
+export class Category {
   @Prop({ type: String, default: uuidv4 })
   _id: string;
 
   @Prop({ type: String })
-  email: string;
+  name: string;
 
   @Prop({ type: String })
-  password: string;
+  description: string;
 
   @Prop({ type: String })
-  full_name: string;
-
-  @Prop({ type: [String] })
-  rol: string[];
-
-  @Prop({ type: String, length: 10 })
-  phone: string;
+  color: string;
 }
-export const UserSchema = SchemaFactory.createForClass(User);
+export const CategorySchema = SchemaFactory.createForClass(Category);
