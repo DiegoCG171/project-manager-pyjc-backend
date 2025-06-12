@@ -12,11 +12,10 @@ import { AuthModule } from 'src/auth/auth.module';
     MongooseModule.forFeature([
       {
         name: User.name,
-        schema: UserSchema
-      }
+        schema: UserSchema,
+      },
     ]),
-    AuthModule
-  ]
-
+    AuthModule,
+  ],
 })
 export class UserModule {}

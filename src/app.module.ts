@@ -9,6 +9,7 @@ import { RolModule } from './rol/rol.module';
 import { SeedModule } from './seed/seed.module';
 
 import { AreaModule } from './area/area.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { AreaModule } from './area/area.module';
     RolModule,
     SeedModule,
     AreaModule,
+    CategoryModule,
   ],
   controllers: [],
   providers: [],
