@@ -4,17 +4,27 @@ import { UpdateCommentDto } from './dto/update-comment.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Comment } from './entities/comment.entity';
 import { Model } from 'mongoose';
+import { ProjectService } from 'src/project/project.service';
 
 @Injectable()
 export class CommentService {
   constructor(
     @InjectModel(Comment.name)
-    private readonly commentModel: Model<Comment>
+    private readonly commentModel: Model<Comment>,
+    private readonly projectService: ProjectService 
   ){}
 
   async create(createCommentDto: CreateCommentDto) {
     try {
+      const { id_project } = createCommentDto;
       const comment = await this.commentModel.create(createCommentDto)
+      if(comment){
+
+        const project = await this.projectService.findOne(id_project);
+        project.comments.push(comment._id);
+        await this.projectService.update(id_project, { comments: project.comments })
+        
+      }
       return comment;
     } catch (error) {
       throw error

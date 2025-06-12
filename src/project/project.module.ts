@@ -14,6 +14,7 @@ import { Project, ProjectSchema } from './entities/project.entity';
         schema:ProjectSchema
       }
     ])
-  ]
+  ],
+  exports: [ProjectService]
 })
 export class ProjectModule {}

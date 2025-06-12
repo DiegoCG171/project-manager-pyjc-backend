@@ -6,7 +6,7 @@ export class User {
   @Prop({ type: String, default: uuidv4 })
   _id: string;
 
-  @Prop({ type: String })
+  @Prop({ type: String, unique: true })
   email: string;
 
   @Prop({ type: String })

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -19,15 +19,20 @@ export class UserService {
         createUserDto.password,
       );
       const user = await this.userModel.create(createUserDto);
+      delete user.password
       return user;
-    } catch (error) {
+    }  
+    catch (error) {
+      if(error?.code === 11000){
+        throw new ConflictException("No se permite un email duplicado, debe ser unico para cada usuario")
+      }
       throw error;
     }
   }
 
   async findAll() {
     try {
-      const users = await this.userModel.find().exec();
+      const users = await this.userModel.find().select('-password').exec();
       return users;
     } catch (error) {
       throw error;
@@ -36,7 +41,7 @@ export class UserService {
 
   async findOne(id: string) {
     try {
-      const user = await this.userModel.findOne({ id: id }).exec();
+      const user = await this.userModel.findOne({ _id: id }).exec();
       if (!user) {
         throw new NotFoundException(`El usuario con id ${id} no existe`);
       }
@@ -50,10 +55,11 @@ export class UserService {
     try {
       const updatedUser = await this.userModel
         .findOneAndUpdate(
-          { uuid: id },
+          { _id: id },
           updateUserDto,
-          { new: true }, // Devuelve el documento actualizado
+          { new: true },
         )
+        .select('-password')
         .exec();
 
       if (!updatedUser) {
@@ -69,7 +75,8 @@ export class UserService {
   async remove(id: string) {
     try {
       const user = await this.findOne(id);
-      await this.userModel.deleteOne(user.id);
+      await this.userModel.deleteOne({ _id: user._id });
+      return { message: "Usuario eliminado correctamente" };
     } catch (error) {
       throw error;
     }

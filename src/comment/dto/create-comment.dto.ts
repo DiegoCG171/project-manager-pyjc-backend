@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from "class-validator";
+import { IsOptional, IsString, IsUUID } from "class-validator";
 
 export class CreateCommentDto {
 
@@ -11,5 +11,8 @@ export class CreateCommentDto {
     @IsOptional()
     @IsString()
     parent?: string;
+
+    @IsUUID()
+    id_project: string;
 
 }
