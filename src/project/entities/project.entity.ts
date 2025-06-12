@@ -3,7 +3,7 @@ import { Date } from "mongoose";
 import { v4 as uuidv4 } from 'uuid';
 
 @Schema({timestamps:true})
-export class Proyecto {
+export class Project {
 
     @Prop({type:String, default:uuidv4})
     _id:string;
@@ -56,4 +56,4 @@ export class Proyecto {
 
 }
 
-export const ProyectoSchema = SchemaFactory.createForClass(Proyecto)
+export const ProjectSchema = SchemaFactory.createForClass(Project)

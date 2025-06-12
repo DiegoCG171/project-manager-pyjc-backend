@@ -15,6 +15,7 @@ export class CommentService {
   async create(createCommentDto: CreateCommentDto) {
     try {
       const comment = await this.commentModel.create(createCommentDto)
+      return comment;
     } catch (error) {
       throw error
     }

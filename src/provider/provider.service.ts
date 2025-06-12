@@ -14,6 +14,7 @@ export class ProviderService {
   async create(createProviderDto: CreateProviderDto) {
     try {
       const provider = await this.providerModel.create(createProviderDto)
+      return provider;
     } catch (error) {
       throw error
     }
