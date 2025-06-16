@@ -14,6 +14,7 @@ import { MailSenderModule } from './mail-sender/mail-sender.module';
 import { ProjectModule } from './project/project.module';
 import { ProviderModule } from './provider/provider.module';
 import { CommentModule } from './comment/comment.module';
+import { LogModule } from './log/log.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { CommentModule } from './comment/comment.module';
     ProjectModule,
     ProviderModule,
     CommentModule,
+    LogModule,
   ],
   controllers: [],
   providers: [],

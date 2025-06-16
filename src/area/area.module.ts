@@ -8,12 +8,12 @@ import { Area, AreaSchema } from './entities/area.entity';
   controllers: [AreaController],
   providers: [AreaService],
   imports: [
-      MongooseModule.forFeature([
-        {
-          name: Area.name,
-          schema: AreaSchema
-        }
-      ])
-    ]
+    MongooseModule.forFeature([
+      {
+        name: Area.name,
+        schema: AreaSchema,
+      },
+    ]),
+  ],
 })
 export class AreaModule {}

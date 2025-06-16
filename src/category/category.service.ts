@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 // import { HashService } from 'src/auth/hash.service';
-import { Category } from './entities/category.entity';
+import { Category, CategoryDocument } from './entities/category.entity';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
@@ -10,7 +10,7 @@ import { InjectModel } from '@nestjs/mongoose';
 export class CategoryService {
   constructor(
     @InjectModel(Category.name)
-    private readonly categoryModel: Model<Category>,
+    private readonly categoryModel: Model<CategoryDocument>,
     // private readonly hashService: HashService,
   ) {}
   async create(createCategoryDto: CreateCategoryDto) {
@@ -46,11 +46,11 @@ export class CategoryService {
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {
     try {
       const updatedCategory = await this.categoryModel
-        .findOneAndUpdate({ _id: id }, updateCategoryDto, { new: true })
+        .findByIdAndUpdate(id, updateCategoryDto, { new: true })
         .exec();
 
       if (!updatedCategory) {
-        throw new NotFoundException(`No existe la categoria con el id ${id} `);
+        throw new NotFoundException(`Categoría con ID ${id} no encontrada`);
       }
 
       return updatedCategory;

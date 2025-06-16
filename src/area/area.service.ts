@@ -9,15 +9,15 @@ import { Model } from 'mongoose';
 export class AreaService {
   constructor(
     @InjectModel(Area.name)
-    private readonly areaModel:Model<Area>
-  ){}
+    private readonly areaModel: Model<Area>,
+  ) {}
 
   async create(createAreaDto: CreateAreaDto) {
     try {
-      const area =await this.areaModel.create(createAreaDto);
+      const area = await this.areaModel.create(createAreaDto);
       return area;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
@@ -34,31 +34,31 @@ export class AreaService {
     try {
       const area = await this.areaModel.findOne({ _id }).exec();
       if (!area) {
-        throw new NotFoundException(`El area con id ${ _id } no existe`);
+        throw new NotFoundException(`El area con id ${_id} no existe`);
       }
       return area;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
   async update(id: string, updateAreaDto: UpdateAreaDto) {
     try {
-      const area = await this.findOne(id)
-      Object.assign(area,updateAreaDto)
-      return await this.areaModel.create(area)
+      const area = await this.findOne(id);
+      Object.assign(area, updateAreaDto);
+      return await this.areaModel.create(area);
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
   async remove(_id: string) {
     try {
-      const area = await this.findOne(_id)
-      await this.areaModel.deleteOne({_id: area._id})
+      const area = await this.findOne(_id);
+      await this.areaModel.deleteOne({ _id: area._id });
       return { message: `El area con id ${area._id} se elimino correctamente` };
     } catch (error) {
-      throw error
+      throw error;
     }
-  }   
+  }
 }
