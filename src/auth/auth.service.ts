@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'src/user/entities/user.entity';
@@ -10,6 +10,8 @@ import { CreateRecoveryCodeDto } from './dto/recovery-code.dto';
 import { RecoveryCode } from './entities/recovery-code.entity';
 import { MailSenderService } from 'src/mail-sender/mail-sender.service';
 import { RecoveryPasswordDto } from './dto/recovery-password.dto';
+import { IsNumberString } from 'class-validator';
+import { ValidateCodeDto } from './dto/validate-code.dto';
 
 @Injectable()
 export class AuthService {
@@ -62,9 +64,30 @@ export class AuthService {
             createRecoveryCode.code = Math.floor(100000 + Math.random() * 900000).toString()
             await this.codeModel.create(createRecoveryCode)
             await this.emailService.sendRecoveryPasswordEmail(user.email, createRecoveryCode.code);
-            return { message: "Correo enviado" } 
+            return { message: "Correo enviado" }
         } catch (error) {
             console.log(error)
+            throw error
+        }
+
+    }
+
+    async validateCode(validateCodeDto: ValidateCodeDto) {
+        try {
+            const { code } = validateCodeDto;
+            const storedCode: RecoveryCode = await this.codeModel.findOne({ code }).exec();
+            const isCodeNotExpired = new Date(storedCode?.expiresAt) > new Date();
+
+            if (!storedCode) {
+                throw new NotFoundException('El codigo no es valido')
+            }
+
+            if(!isCodeNotExpired){
+                throw new UnauthorizedException('El codigo ha caducado')
+            }
+
+            return { isValid: true, message: 'El codigo es valido' }
+        } catch (error) {
             throw error
         }
 
