@@ -16,6 +16,6 @@ import { ProjectModule } from 'src/project/project.module';
       }
     ]),
     ProjectModule
-  ]
+  ],
 })
 export class CommentModule { }

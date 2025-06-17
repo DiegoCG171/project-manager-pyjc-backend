@@ -7,6 +7,7 @@ import { Area, AreaSchema } from './entities/area.entity';
 @Module({
   controllers: [AreaController],
   providers: [AreaService],
+  exports: [AreaService],
   imports: [
     MongooseModule.forFeature([
       {

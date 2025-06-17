@@ -4,16 +4,24 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Project } from './entities/project.entity';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
+import { AreaService } from 'src/area/area.service';
 
 @Injectable()
 export class ProjectService {
   constructor(
     @InjectModel(Project.name)
-    private readonly projectModel:Model<Project>
+    private readonly projectModel:Model<Project>,
+    private readonly areaService:AreaService
   ){}
   async create(createProjectDto: CreateProjectDto) {
     try {
+      const {id_area}=createProjectDto;
       const proyecto = await this.projectModel.create(createProjectDto);
+      if (proyecto) {
+        const area = await this.areaService.findOne(id_area);
+        area.projects.push(proyecto._id);
+        await this.areaService.update(id_area,{ projects:area.projects})
+      }
       return proyecto;
     } catch (error) {
       throw error
