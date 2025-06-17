@@ -15,6 +15,7 @@ import { ProjectModule } from './project/project.module';
 import { ProviderModule } from './provider/provider.module';
 import { CommentModule } from './comment/comment.module';
 import { LogModule } from './log/log.module';
+import { AssignamentsModule } from './assignaments/assignaments.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { LogModule } from './log/log.module';
     ProviderModule,
     CommentModule,
     LogModule,
+    AssignamentsModule,
   ],
   controllers: [],
   providers: [],
