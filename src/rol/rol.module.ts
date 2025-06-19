@@ -3,6 +3,7 @@ import { RolService } from './rol.service';
 import { RolController } from './rol.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Rol, RolSchema } from './entities/rol.entity';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
   controllers: [RolController],
@@ -14,6 +15,7 @@ import { Rol, RolSchema } from './entities/rol.entity';
         schema: RolSchema,
       },
     ]),
+    UserModule,
   ],
 })
 export class RolModule {}

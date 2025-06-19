@@ -24,7 +24,7 @@ export class ProjectService {
       }
       return proyecto;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
@@ -33,13 +33,13 @@ export class ProjectService {
       const proyecto = await this.projectModel.find().exec();
       return proyecto;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 
   async findOne(_id: string) {
     try {
-      const proyecto = await this.projectModel.findOne({_id}).exec();
+      const proyecto = await this.projectModel.findOne({ _id }).exec();
       if (!proyecto) {
         throw new NotFoundException(`El proyecto con id ${_id} no existe`);
       }
@@ -51,21 +51,23 @@ export class ProjectService {
 
   async update(_id: string, updateProjectDto: UpdateProjectDto) {
     try {
-      const proyecto = await this.findOne(_id)
-      Object.assign(proyecto,updateProjectDto)
-      return await this.projectModel.create(proyecto)
+      const proyecto = await this.findOne(_id);
+      Object.assign(proyecto, updateProjectDto);
+      return await this.projectModel.create(proyecto);
     } catch (error) {
       throw error;
     }
-    }
+  }
 
   async remove(_id: string) {
     try {
-      const proyecto = await this.findOne(_id)
-      await this.projectModel.deleteOne({_id: proyecto._id})
-      return {message:`El proyecto con id ${proyecto._id} se elimino corectamente`};
+      const proyecto = await this.findOne(_id);
+      await this.projectModel.deleteOne({ _id: proyecto._id });
+      return {
+        message: `El proyecto con id ${proyecto._id} se elimino corectamente`,
+      };
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }

@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { IsArray, IsString } from 'class-validator';
 
 export class CreateCategoryDto {
   @IsString()
@@ -10,4 +10,8 @@ export class CreateCategoryDto {
   @IsString()
   //@Matches(/^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})$/)
   color: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  areas: string[];
 }

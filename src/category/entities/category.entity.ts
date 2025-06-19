@@ -15,6 +15,9 @@ export class Category {
 
   @Prop({ type: String })
   color: string;
+
+  @Prop({ type: [String] })
+  areas: string[];
 }
 export type CategoryDocument = Category & Document;
 export const CategorySchema = SchemaFactory.createForClass(Category);

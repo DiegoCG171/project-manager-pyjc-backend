@@ -1,4 +1,4 @@
-import { IsArray, IsNumber, IsNumberString, IsString } from 'class-validator';
+import { IsArray, IsNumber, IsString, IsUUID } from 'class-validator';
 
 export class CreateAreaDto {
   @IsString()
@@ -13,4 +13,7 @@ export class CreateAreaDto {
 
   @IsNumber()
   order: number;
+
+  @IsUUID()
+  id_category: string;
 }
