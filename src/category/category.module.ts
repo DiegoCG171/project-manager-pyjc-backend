@@ -17,5 +17,6 @@ import { Category, CategorySchema } from './entities/category.entity';
     ]),
     AuthModule,
   ],
+  exports: [CategoryService],
 })
 export class CategoryModule {}
