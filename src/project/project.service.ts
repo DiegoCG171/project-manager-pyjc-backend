@@ -10,14 +10,9 @@ import { AreaService } from 'src/area/area.service';
 export class ProjectService {
   constructor(
     @InjectModel(Project.name)
-<<<<<<< HEAD
-    private readonly projectModel: Model<Project>,
-  ) {}
-=======
     private readonly projectModel:Model<Project>,
     private readonly areaService:AreaService
   ){}
->>>>>>> 4079645bdc28f8a8cdbad9c5a8bd9b2eddbd5cb9
   async create(createProjectDto: CreateProjectDto) {
     try {
       const {id_area}=createProjectDto;
