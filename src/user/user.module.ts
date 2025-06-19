@@ -8,6 +8,7 @@ import { AuthModule } from 'src/auth/auth.module';
 @Module({
   controllers: [UserController],
   providers: [UserService],
+  exports:[UserService],
   imports: [
     MongooseModule.forFeature([
       {
