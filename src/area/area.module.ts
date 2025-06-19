@@ -8,6 +8,7 @@ import { CategoryModule } from 'src/category/category.module';
 @Module({
   controllers: [AreaController],
   providers: [AreaService],
+  exports: [AreaService],
   imports: [
     MongooseModule.forFeature([
       {
