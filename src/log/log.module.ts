@@ -15,5 +15,6 @@ import { Log, LogSchema } from './entities/log.entity';
       },
     ]),
   ],
+  exports: [LogService],
 })
 export class LogModule {}
