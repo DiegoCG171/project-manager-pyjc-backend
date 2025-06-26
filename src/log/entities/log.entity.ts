@@ -4,8 +4,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Schema()
 class Changes extends Document {
+  @Prop({ type: String })
   prop: string;
+
+  @Prop({ type: String })
   previusValue: any;
+
+  @Prop({ type: String })
   newValue: any;
 }
 
@@ -23,7 +28,7 @@ export class Log extends Document {
   @Prop({ type: String })
   performedBy: uuidv4;
 
-  @Prop({ type: Changes })
+  @Prop({ type: [Object] })
   changes: Changes;
 }
 export const LogSchema = SchemaFactory.createForClass(Log);

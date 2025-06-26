@@ -12,7 +12,7 @@ class Changes {
   prop: string;
 
   @IsOptional()
-  previusValue: any;
+  previousValue: any;
 
   @IsOptional()
   newValue: any;

@@ -9,14 +9,14 @@ import { AreaModule } from 'src/area/area.module';
   controllers: [ProjectController],
   providers: [ProjectService],
   exports: [ProjectService],
-  imports:[
+  imports: [
     MongooseModule.forFeature([
       {
-        name:Project.name,
-        schema:ProjectSchema
-      }
+        name: Project.name,
+        schema: ProjectSchema,
+      },
     ]),
-    AreaModule
+    AreaModule,
   ],
 })
 export class ProjectModule {}
