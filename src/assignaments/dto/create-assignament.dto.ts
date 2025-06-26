@@ -10,13 +10,13 @@ export class CreateAssignamentDto {
     id_user:string;
 
     @IsString()
-    plataform:string;
+    id_plataform:string;
 
     @IsString()
     plataform_activity:string;
 
     @IsString()
-    status_color:string;
+    id_status:string;
 
     @IsNumber()
     procentage:number;

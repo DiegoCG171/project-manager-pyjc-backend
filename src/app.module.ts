@@ -16,6 +16,8 @@ import { ProviderModule } from './provider/provider.module';
 import { CommentModule } from './comment/comment.module';
 import { LogModule } from './log/log.module';
 import { AssignamentsModule } from './assignaments/assignaments.module';
+import { StatusAssignamentModule } from './status_assignament/status_assignament.module';
+import { PlataformModule } from './plataform/plataform.module';
 
 @Module({
   imports: [
@@ -48,6 +50,8 @@ import { AssignamentsModule } from './assignaments/assignaments.module';
     CommentModule,
     LogModule,
     AssignamentsModule,
+    StatusAssignamentModule,
+    PlataformModule,
   ],
   controllers: [],
   providers: [],

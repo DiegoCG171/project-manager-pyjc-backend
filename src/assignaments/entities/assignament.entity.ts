@@ -14,13 +14,13 @@ export class Assignament{
     id_user:string;
 
     @Prop({type:String})
-    plataform:string;
+    id_plataform:string;
 
     @Prop({type:String})
     plataform_activity:string;
 
     @Prop({type:String})
-    status_color:string;
+    id_status:string;
 
     @Prop({type:Number})
     percentage:number;

@@ -49,6 +49,10 @@ export class CreateProjectDto {
     @IsString({ each: true })
     comments: string[];
 
+    @IsArray()
+    @IsString({ each: true })
+    assignaments: string[];
+
     @IsUUID()
     id_area: string;
 }

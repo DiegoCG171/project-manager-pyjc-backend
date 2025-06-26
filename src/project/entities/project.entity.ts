@@ -53,6 +53,8 @@ export class Project {
     @Prop({ type: [String] })
     comments: string[];
 
+    @Prop({ type: [String] })
+    assignaments: string[];
 
 }
 
