@@ -20,9 +20,6 @@ export class Plataform extends Document{
     @Prop({type:String})
     name: string;
 
-    @Prop({ type: [String] })
-    assignaments: string[];
-
     @Prop({ type: [ActivitySchema], default: [] })
     activities: Activities[];
 

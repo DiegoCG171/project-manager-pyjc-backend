@@ -38,7 +38,7 @@ export class AuthService {
 
         return {
             ...objUser,
-            token: this.jwtService.sign({ objUser }, { expiresIn: '1h' })
+            token: this.jwtService.sign({ ...objUser }, { expiresIn: '1h' })
         }
     }
 

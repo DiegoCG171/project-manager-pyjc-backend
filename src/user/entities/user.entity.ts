@@ -20,8 +20,6 @@ export class User {
 
   @Prop({ type: String, length: 10 })
   phone: string;
-
-  @Prop({ type: [String] })
-  assignaments: string[];
+  
 }
 export const UserSchema = SchemaFactory.createForClass(User);

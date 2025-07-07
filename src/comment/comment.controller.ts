@@ -2,14 +2,18 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CommentService } from './comment.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
+import { User } from 'src/user/entities/user.entity';
+import { GetUser } from 'src/auth/decorators/get-user.decorator';
+import { AuthJwt } from 'src/auth/decorators/auth-jwt.decorator';
 
 @Controller('comment')
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @Post()
-  create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentService.create(createCommentDto);
+  @AuthJwt()
+  create(@Body() createCommentDto: CreateCommentDto, @GetUser() user: User) {
+    return this.commentService.create(createCommentDto, user);
   }
 
   @Get()

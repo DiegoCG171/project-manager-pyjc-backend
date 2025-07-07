@@ -17,6 +17,7 @@ export class LogService {
       const log = await this.logModel.create(createLogDto);
       return log;
     } catch (error) {
+      console.log(error)
       throw error;
     }
   }

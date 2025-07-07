@@ -6,6 +6,7 @@ import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { AreaService } from 'src/area/area.service';
 import { LogService } from 'src/log/log.service';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class ProjectService {
@@ -16,20 +17,21 @@ export class ProjectService {
     private readonly logService: LogService,
   ) {}
 
-  async create(createProjectDto: CreateProjectDto, userId: string) {
+  async create(createProjectDto: CreateProjectDto, user: User) {
     try {
+      
       const { id_area } = createProjectDto;
-      const proyecto = await this.projectModel.create(createProjectDto);
+      const proyect = await this.projectModel.create(createProjectDto);
 
-      if (proyecto) {
+      if (proyect) {
         const area = await this.areaService.findOne(id_area);
-        area.projects.push(proyecto._id);
+        area.projects.push(proyect._id);
         await this.areaService.update(id_area, { projects: area.projects });
 
         await this.logService.create({
           entityType: 'Project',
           action: 'CREATE',
-          performedBy: userId,
+          performedBy: user._id,
           changes: Object.entries(createProjectDto).map(([prop, value]) => ({
             prop,
             previousValue: null,
@@ -37,8 +39,10 @@ export class ProjectService {
           })),
         });
       }
-      return proyecto;
+      return proyect;
+      
     } catch (error) {
+      console.error(error)
       throw error;
     }
   }
@@ -67,41 +71,38 @@ export class ProjectService {
   async update(
     _id: string,
     updateProjectDto: UpdateProjectDto,
-    userId: string,
+    user: User,
   ) {
     try {
-      //Obtiene el estado actual del proyecto
-      const proyecto = await this.findOne(_id);
-      const proyectoAnterior = { ...proyecto.toObject() };
-      //Aplicar los cambios
-      Object.assign(proyecto, updateProjectDto);
+      const proyect = await this.findOne(_id);
+      const lastValuesProject = { ...proyect.toObject() };
+      Object.assign(proyect, updateProjectDto);
 
-      //Registrar en log los cambios detectados
-      const cambios = Object.entries(updateProjectDto).reduce(
-        (acc, [key, nuevoValor]) => {
-          const valorAnterior = proyectoAnterior[key];
-          if (valorAnterior !== nuevoValor) {
-            acc.push({
+      const changes = Object.entries(updateProjectDto).reduce(
+        (actions, [key, newValue]) => {
+          const previousValue = lastValuesProject[key];
+          if (previousValue !== newValue) {
+            actions.push({
               prop: key,
-              previousValue: valorAnterior,
-              newValue: nuevoValor,
+              previousValue,
+              newValue
             });
           }
-          return acc;
+          return actions;
         },
         [],
       );
 
-      if (cambios.length > 0) {
+      if (changes.length > 0) {
         await this.logService.create({
           entityType: 'Project',
           action: 'UPDATE',
-          performedBy: userId,
-          changes: cambios,
+          performedBy: user._id,
+          changes: changes,
         });
       }
 
-      return await this.projectModel.create(proyecto);
+      return await this.projectModel.create(proyect);
     } catch (error) {
       throw error;
     }

@@ -25,8 +25,5 @@ export class CreateUserDto {
   @IsNumberString()
   @Length(10)
   phone: string;
-
-  @IsArray()
-  @IsString({ each: true })
-  assignaments: string[];
+  
 }

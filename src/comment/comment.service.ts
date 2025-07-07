@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Comment } from './entities/comment.entity';
 import { Model } from 'mongoose';
 import { ProjectService } from 'src/project/project.service';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class CommentService {
@@ -14,7 +15,7 @@ export class CommentService {
     private readonly projectService: ProjectService 
   ){}
 
-  async create(createCommentDto: CreateCommentDto) {
+  async create(createCommentDto: CreateCommentDto, user: User) {
     try {
       const { id_project } = createCommentDto;
       const comment = await this.commentModel.create(createCommentDto)
@@ -22,7 +23,7 @@ export class CommentService {
 
         const project = await this.projectService.findOne(id_project);
         project.comments.push(comment._id);
-        await this.projectService.update(id_project, { comments: project.comments })
+        await this.projectService.update(id_project, { comments: project.comments }, user)
         
       }
       return comment;

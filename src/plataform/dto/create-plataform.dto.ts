@@ -14,10 +14,6 @@ export class CreatePlataformDto {
     @IsString()
     name: string;
 
-    @IsArray()
-    @IsString({ each: true })
-    assignaments: string[];
-
     @ValidateNested({ each: true })
     @Type(() => ActivityDto)
     activities: ActivityDto[];

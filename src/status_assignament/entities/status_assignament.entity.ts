@@ -11,9 +11,6 @@ export class StatusAssignament {
 
     @Prop({type:String})
     color: string;
-
-    @Prop({ type: [String] })
-    assignaments: string[];
 }
 
 export const StatusAssignamentSchema = SchemaFactory.createForClass(StatusAssignament)

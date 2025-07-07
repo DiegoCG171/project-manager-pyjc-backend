@@ -15,5 +15,5 @@ export class CreateAreaDto {
   order: number;
 
   @IsUUID()
-  id_category: string;
+  category: string;
 }

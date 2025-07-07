@@ -5,44 +5,24 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Assignament } from './entities/assignament.entity';
 import { Model } from 'mongoose';
 import { ProjectService } from 'src/project/project.service';
-import { UserService } from 'src/user/user.service';
-import { StatusAssignamentService } from 'src/status_assignament/status_assignament.service';
-import { PlataformService } from 'src/plataform/plataform.service';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class AssignamentsService {
   constructor(
     @InjectModel(Assignament.name)
     private readonly assignamentModel: Model<Assignament>,
-    private readonly projectService:ProjectService,
-    private readonly userService:UserService,
-    private readonly statusAsignamentsService:StatusAssignamentService,
-    private readonly plataformService:PlataformService
+    private readonly projectService: ProjectService
   ) { }
-  async create(createAssignamentDto: CreateAssignamentDto) {
+  async create(createAssignamentDto: CreateAssignamentDto, user: User) {
     try {
-      const {id_project}=createAssignamentDto;
-      const {id_user}=createAssignamentDto;
-      const {id_status}=createAssignamentDto;
-      const {id_plataform}= createAssignamentDto;
+      const { id_project } = createAssignamentDto;
 
       const assignament = await this.assignamentModel.create(createAssignamentDto);
       if (assignament) {
         const project = await this.projectService.findOne(id_project);
-        const user= await this.userService.findOne(id_user);
-        const status= await this.statusAsignamentsService.findOne(id_status);
-        const plataform= await this.plataformService.findOne(id_plataform);
-
-        project.assignaments.push(assignament._id);
-        user.assignaments.push(assignament._id);
-        status.assignaments.push(assignament.id);
-        plataform.assignaments.push(assignament.id);
-        
-        await this.projectService.update(id_project,{assignaments:project.assignaments});
-        await this.userService.update(id_user,{assignaments:user.assignaments});
-        await this.statusAsignamentsService.update(id_status,{assignaments:status.assignaments});
-        await this.plataformService.update(id_plataform,{assignaments:status.assignaments})
-        
+        project.assignaments.push(assignament._id)
+        await this.projectService.update(id_project, { assignaments: project.assignaments }, user);
       }
       return assignament;
     } catch (error) {

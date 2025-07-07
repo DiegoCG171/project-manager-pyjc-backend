@@ -8,9 +8,6 @@ export class Comment {
     _id:string;
 
     @Prop({type:String})
-    id_user:string;
-
-    @Prop({type:String})
     comment:string;
 
     @Prop({type:String,default: null})

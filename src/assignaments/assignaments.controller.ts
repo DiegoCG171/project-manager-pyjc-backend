@@ -2,14 +2,18 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { AssignamentsService } from './assignaments.service';
 import { CreateAssignamentDto } from './dto/create-assignament.dto';
 import { UpdateAssignamentDto } from './dto/update-assignament.dto';
+import { GetUser } from 'src/auth/decorators/get-user.decorator';
+import { User } from 'src/user/entities/user.entity';
+import { AuthJwt } from 'src/auth/decorators/auth-jwt.decorator';
 
 @Controller('assignaments')
 export class AssignamentsController {
   constructor(private readonly assignamentsService: AssignamentsService) {}
 
   @Post()
-  create(@Body() createAssignamentDto: CreateAssignamentDto) {
-    return this.assignamentsService.create(createAssignamentDto);
+  @AuthJwt()
+  create(@Body() createAssignamentDto: CreateAssignamentDto, @GetUser() user: User) {
+    return this.assignamentsService.create(createAssignamentDto, user);
   }
 
   @Get()

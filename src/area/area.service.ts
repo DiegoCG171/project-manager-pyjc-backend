@@ -4,27 +4,17 @@ import { UpdateAreaDto } from './dto/update-area.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Area } from './entities/area.entity';
 import { Model } from 'mongoose';
-import { CategoryService } from 'src/category/category.service';
 
 @Injectable()
 export class AreaService {
   constructor(
     @InjectModel(Area.name)
     private readonly areaModel: Model<Area>,
-    private readonly categoryService: CategoryService,
   ) {}
 
   async create(createAreaDto: CreateAreaDto) {
     try {
-      const { id_category } = createAreaDto;
       const area = await this.areaModel.create(createAreaDto);
-      if (area) {
-        const category = await this.categoryService.findOne(id_category);
-        category.areas.push(area._id);
-        await this.categoryService.update(id_category, {
-          areas: category.areas,
-        });
-      }
       return area;
     } catch (error) {
       throw error;
@@ -58,6 +48,7 @@ export class AreaService {
       Object.assign(area, updateAreaDto);
       return await this.areaModel.create(area);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }

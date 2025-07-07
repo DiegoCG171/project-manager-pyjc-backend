@@ -9,10 +9,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/user/entities/user.entity';
 import { RecoveryCode, RecoveryCodeSchema } from './entities/recovery-code.entity';
 import { MailSenderModule } from 'src/mail-sender/mail-sender.module';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, HashService],
+  providers: [AuthService, HashService, JwtStrategy],
   exports: [HashService],
   imports: [
     ConfigModule,

@@ -2,14 +2,18 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ProjectService} from './project.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
+import { GetUser } from 'src/auth/decorators/get-user.decorator';
+import { User } from 'src/user/entities/user.entity';
+import { AuthJwt } from 'src/auth/decorators/auth-jwt.decorator';
 
 @Controller('project')
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
   @Post()
-  create(@Body() createprojectDto: CreateProjectDto) {
-    return this.projectService.create(createprojectDto);
+  @AuthJwt()
+  create(@Body() createprojectDto: CreateProjectDto, @GetUser() user: User) {
+    return this.projectService.create(createprojectDto, user);
   }
 
   @Get()
@@ -23,8 +27,9 @@ export class ProjectController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {
-    return this.projectService.update(id, updateProjectDto);
+  @AuthJwt()
+  update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto, @GetUser() user: User) {
+    return this.projectService.update(id, updateProjectDto, user);
   }
 
   @Delete(':id')

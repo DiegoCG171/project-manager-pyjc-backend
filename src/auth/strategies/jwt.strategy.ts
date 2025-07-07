@@ -10,19 +10,18 @@ import { User } from "src/user/entities/user.entity";
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(
         @InjectModel(User.name)
-        private readonly userModel = Model<User>,
+        private readonly userModel: Model<User>,
         configService: ConfigService
     ){
         super({
-            ignoreExpiration: false,
             secretOrKey: configService.get('JWT_SECRET'),
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
         });
     }
 
-    async validate(payload: { uuid: string }): Promise<User> {
-        const { uuid } = payload 
-        const user = await this.userModel.findOne({ uuid });
+    async validate(payload: { _id: string }): Promise<User> {
+        const { _id } = payload 
+        const user = await this.userModel.findOne({ _id });
         if(!user) throw new UnauthorizedException('Token no valido');
         return user;
     }

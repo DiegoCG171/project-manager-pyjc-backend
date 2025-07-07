@@ -1,4 +1,4 @@
-import { IsArray, IsString } from "class-validator";
+import { IsString } from "class-validator";
 
 export class CreateStatusAssignamentDto {
 
@@ -8,7 +8,4 @@ export class CreateStatusAssignamentDto {
     @IsString()
     color: string;
 
-    @IsArray()
-    @IsString({ each: true })
-    assignaments: string[];
 }
