@@ -4,7 +4,6 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
   app.setGlobalPrefix('api/v1');
   app.useGlobalPipes(
     new ValidationPipe({
@@ -18,5 +17,6 @@ async function bootstrap() {
     credentials: true,
     allowedHeaders: 'Content-Type, Authorization'
   })
+  await app.listen(3000);
 }
 bootstrap();
