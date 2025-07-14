@@ -7,6 +7,7 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 import { AreaService } from 'src/area/area.service';
 import { LogService } from 'src/log/log.service';
 import { User } from 'src/user/entities/user.entity';
+import { StatusProjectService } from 'src/status_project/status_project.service';
 
 @Injectable()
 export class ProjectService {
@@ -15,18 +16,26 @@ export class ProjectService {
     private readonly projectModel: Model<Project>,
     private readonly areaService: AreaService,
     private readonly logService: LogService,
+    private readonly statusprojectService: StatusProjectService
   ) {}
 
   async create(createProjectDto: CreateProjectDto, user: User) {
     try {
       
       const { id_area } = createProjectDto;
+      const {status_project} = createProjectDto;
+
       const proyect = await this.projectModel.create(createProjectDto);
 
       if (proyect) {
         const area = await this.areaService.findOne(id_area);
+        const status = await this.statusprojectService.findOne(status_project);
+
         area.projects.push(proyect._id);
+        status.projects.push(proyect._id);
+
         await this.areaService.update(id_area, { projects: area.projects });
+        await this.statusprojectService.update(status_project,{projects:status.projects})
 
         await this.logService.create({
           entityType: 'Project',

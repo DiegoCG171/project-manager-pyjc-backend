@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ProjectController } from './project.controller';
 import { ProjectService } from './project.service';
 import { Project, ProjectSchema } from './entities/project.entity';
 import { AreaModule } from 'src/area/area.module';
 import { LogModule } from 'src/log/log.module';
+import { StatusProjectModule } from 'src/status_project/status_project.module';
 
 @Module({
   controllers: [ProjectController],
@@ -18,7 +19,8 @@ import { LogModule } from 'src/log/log.module';
       },
     ]),
     AreaModule,
-    LogModule
+    LogModule,
+    forwardRef(() => StatusProjectModule)
   ],
 })
 export class ProjectModule {}
