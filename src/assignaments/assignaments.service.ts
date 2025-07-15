@@ -32,7 +32,13 @@ export class AssignamentsService {
 
   async findAll() {
     try {
-      const assignament = await this.assignamentModel.find().exec();
+      const assignament = await this.assignamentModel
+        .find()
+        .populate('id_project')
+        .populate('id_user')
+        .populate('id_plataform')
+        .populate('id_status')
+        .exec();
       return assignament;
     } catch (error) {
       throw error;
