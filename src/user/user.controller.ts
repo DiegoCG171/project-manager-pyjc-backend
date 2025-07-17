@@ -19,16 +19,29 @@ export class UserController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
+<<<<<<< HEAD
     return this.userService.findOne(+id);
+=======
+    return this.userService.findOne(id);
+>>>>>>> d0ecd81679f054a592ada54fa031e2c2d17fb8b3
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+<<<<<<< HEAD
     return this.userService.update(+id, updateUserDto);
+=======
+    return this.userService.update(id, updateUserDto);
+>>>>>>> d0ecd81679f054a592ada54fa031e2c2d17fb8b3
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
+<<<<<<< HEAD
     return this.userService.remove(+id);
   }
+=======
+    return this.userService.remove(id);}
+
+>>>>>>> d0ecd81679f054a592ada54fa031e2c2d17fb8b3
 }

@@ -1,27 +1,57 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose';
+import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+
+import { RolModule } from './rol/rol.module';
+
+import { SeedModule } from './seed/seed.module';
+
+import { AreaModule } from './area/area.module';
+import { CategoryModule } from './category/category.module';
+import { MailSenderModule } from './mail-sender/mail-sender.module';
+import { ProjectModule } from './project/project.module';
+import { ProviderModule } from './provider/provider.module';
+import { CommentModule } from './comment/comment.module';
+import { LogModule } from './log/log.module';
+import { AssignamentsModule } from './assignaments/assignaments.module';
+import { StatusAssignamentModule } from './status_assignament/status_assignament.module';
+import { PlataformModule } from './plataform/plataform.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env'
+      envFilePath: '.env',
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (
-        configService: ConfigService
+        configService: ConfigService,
       ): Promise<MongooseModuleOptions> => ({
         uri: configService.get<string>('MONGO_INITDB_CONNECTION_URI'),
         user: configService.get<string>('MONGO_INITDB_ROOT_USERNAME'),
         pass: configService.get<string>('MONGO_INITDB_ROOT_PASSWORD'),
         dbName: configService.get<string>('MONGO_INITDB_NAME'),
       }),
-      inject: [ConfigService]
+      inject: [ConfigService],
     }),
-    UserModule
+    AuthModule,
+    UserModule,
+    RolModule,
+    SeedModule,
+    AreaModule,
+    CategoryModule,
+
+    MailSenderModule,
+    ProjectModule,
+    ProviderModule,
+    CommentModule,
+    LogModule,
+    AssignamentsModule,
+    StatusAssignamentModule,
+    PlataformModule,
   ],
   controllers: [],
   providers: [],
