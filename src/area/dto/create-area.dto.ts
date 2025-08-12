@@ -14,6 +14,6 @@ export class CreateAreaDto {
   @IsNumber()
   order: number;
 
-  @IsUUID()
+  @IsString()
   category: string;
 }

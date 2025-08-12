@@ -3,7 +3,6 @@ import { AssignamentsService } from './assignaments.service';
 import { AssignamentsController } from './assignaments.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Assignament, AssignamentSchema } from './entities/assignament.entity';
-import { ProjectModule } from 'src/project/project.module';
 
 @Module({
   controllers: [AssignamentsController],
@@ -16,7 +15,6 @@ import { ProjectModule } from 'src/project/project.module';
         schema: AssignamentSchema
       }
     ]),
-    ProjectModule
   ],
 })
 export class AssignamentsModule { }

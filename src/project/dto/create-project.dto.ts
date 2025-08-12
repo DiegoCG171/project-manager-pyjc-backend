@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsArray, IsDate, IsNumber, IsOptional, IsString, IsUUID } from "class-validator";
+import { IsArray, IsDate, IsNumber, IsString } from "class-validator";
 
 export class CreateProjectDto {
 
@@ -45,15 +45,4 @@ export class CreateProjectDto {
     @IsString({ each: true })
     providers: string[];
 
-    @IsArray()
-    @IsString({ each: true })
-    comments: string[];
-
-    @IsOptional()
-    @IsArray()
-    @IsString({ each: true })
-    assignaments: string[];
-
-    @IsUUID()
-    id_area: string;
 }

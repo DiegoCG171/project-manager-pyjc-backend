@@ -18,7 +18,7 @@ export class Area {
   @Prop({ type: Number })
   order: number;
 
-  @Prop({ type: String, default: uuidv4 })
+  @Prop({ type: String })
   category: string;
 }
 export const AreaSchema = SchemaFactory.createForClass(Area);

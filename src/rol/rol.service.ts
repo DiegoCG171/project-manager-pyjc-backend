@@ -4,6 +4,8 @@ import { UpdateRolDto } from './dto/update-rol.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Rol } from './entities/rol.entity';
 import { Model } from 'mongoose';
+import { Order, PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { PaginationResult } from 'src/common/interface/pagination-result.interface';
 
 @Injectable()
 export class RolService {
@@ -21,11 +23,19 @@ export class RolService {
     }
   }
 
-  async findAll() {
-    //id: string
+  async findAll(paginationQueryDto: PaginationQueryDto): Promise<PaginationResult<Rol>> {
+    const { limit=10, page, order, sortBy } = paginationQueryDto;
     try {
-      const rols = await this.rolModel.find().exec();
-      return rols;
+      const rols = await this.rolModel.find().limit(limit).skip((page - 1) * limit).sort({ [sortBy]: order === Order.ASC ? 1 : -1 }).select('-__v').exec();
+      const totalroles = await this.rolModel.countDocuments().exec();
+      return {
+        data: rols,
+        limit,
+        page,
+        totalPages: Math.ceil(totalroles / limit),
+        total: totalroles
+        // currentPage:0
+      };
     } catch (error) {
       throw error;
     }

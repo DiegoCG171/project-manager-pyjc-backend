@@ -1,6 +1,12 @@
+import { IsArray, IsOptional } from "class-validator";
 import { IsEmail, IsString } from "class-validator";
 
 export class CreateProviderDto {
+
+    @IsOptional()
+    @IsArray()
+    @IsString({ each: true })
+    projects: string[];
 
     @IsString()
     name: string;

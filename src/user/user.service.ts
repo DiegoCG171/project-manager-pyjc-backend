@@ -5,6 +5,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
 import { Model } from 'mongoose';
 import { HashService } from 'src/auth/hash.service';
+import { Order, PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { PaginationResult } from 'src/common/interface/pagination-result.interface';
 
 @Injectable()
 export class UserService {
@@ -13,6 +15,7 @@ export class UserService {
     private readonly userModel: Model<User>,
     private readonly hashService: HashService,
   ) {}
+
   async create(createUserDto: CreateUserDto) {
     try {
       createUserDto.password = await this.hashService.hashPassword(
@@ -30,10 +33,19 @@ export class UserService {
     }
   }
 
-  async findAll() {
+  async findAll(paginationQueryDto: PaginationQueryDto): Promise<PaginationResult<User>> {
+    const { limit=10, page, order, sortBy } = paginationQueryDto;
     try {
-      const users = await this.userModel.find().select('-password').exec();
-      return users;
+      const users = await this.userModel.find().limit(limit).skip((page - 1) * limit).sort({ [sortBy]: order === Order.ASC ? 1 : -1 }).select('-password').exec();
+      const totalusers = await this.userModel.countDocuments().exec();
+      return {
+        data: users,
+        limit,
+        page,
+        totalPages: Math.ceil(totalusers / limit),
+        total: totalusers,
+        // currentPage:0
+      };
     } catch (error) {
       throw error;
     }

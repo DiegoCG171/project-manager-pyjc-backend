@@ -4,6 +4,8 @@ import { UpdatePlataformDto } from './dto/update-plataform.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Plataform } from './entities/plataform.entity';
 import { Model } from 'mongoose';
+import { Order, PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { PaginationResult } from 'src/common/interface/pagination-result.interface';
 
 @Injectable()
 export class PlataformService {
@@ -20,11 +22,19 @@ export class PlataformService {
     }
   }
 
-  async findAll() {
-    try {
-      const plataform = await this.plataformModel.find().exec();
-      return plataform;
-    } catch (error) {
+  async findAll(): Promise<PaginationResult<Plataform>> {
+      const { limit=10, page, order, sortBy } = paginationQueryDto;
+      try {
+        const plataforms = await this.plataformModel.find().limit(limit).skip((page - 1) * limit).sort({ [sortBy]: order === Order.ASC ? 1 : -1 }).select('-__v').exec();
+        const totalplataforms = await this.plataformModel.countDocuments().exec();
+        return {
+          data: plataforms,
+          limit,
+          page,
+          totalPages: Math.ceil(totalplataforms / limit),
+          total: totalplataforms
+          // currentPage:0
+        };} catch (error) {
       throw error
     }
   }

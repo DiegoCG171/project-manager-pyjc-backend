@@ -23,9 +23,6 @@ export class Project {
     @Prop({type:Date})
     finish_date: Date;
 
-    @Prop({type:String,default:uuidv4})
-    status_color:string;
-
     @Prop({type:String})
     priority:string;
 
@@ -49,12 +46,6 @@ export class Project {
 
     @Prop({ type: [String] })
     providers: string[];
-
-    @Prop({ type: [String] })
-    comments: string[];
-
-    @Prop({ type: [String] })
-    assignaments: string[];
 
 }
 

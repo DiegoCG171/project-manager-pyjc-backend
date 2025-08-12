@@ -12,18 +12,12 @@ export class AssignamentsService {
   constructor(
     @InjectModel(Assignament.name)
     private readonly assignamentModel: Model<Assignament>,
-    private readonly projectService: ProjectService
   ) { }
   async create(createAssignamentDto: CreateAssignamentDto, user: User) {
     try {
       const { id_project } = createAssignamentDto;
 
       const assignament = await this.assignamentModel.create(createAssignamentDto);
-      if (assignament) {
-        const project = await this.projectService.findOne(id_project);
-        project.assignaments.push(assignament._id)
-        await this.projectService.update(id_project, { assignaments: project.assignaments }, user);
-      }
       return assignament;
     } catch (error) {
       throw error;

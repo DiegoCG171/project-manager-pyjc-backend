@@ -3,7 +3,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ProjectController } from './project.controller';
 import { ProjectService } from './project.service';
 import { Project, ProjectSchema } from './entities/project.entity';
-import { AreaModule } from 'src/area/area.module';
 import { LogModule } from 'src/log/log.module';
 
 @Module({
@@ -17,7 +16,6 @@ import { LogModule } from 'src/log/log.module';
         schema: ProjectSchema,
       },
     ]),
-    AreaModule,
     LogModule
   ],
 })

@@ -7,26 +7,22 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 import { AreaService } from 'src/area/area.service';
 import { LogService } from 'src/log/log.service';
 import { User } from 'src/user/entities/user.entity';
+import { Order, PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { PaginationResult } from 'src/common/interface/pagination-result.interface';
 
 @Injectable()
 export class ProjectService {
   constructor(
     @InjectModel(Project.name)
     private readonly projectModel: Model<Project>,
-    private readonly areaService: AreaService,
     private readonly logService: LogService,
-  ) {}
+  ) { }
 
   async create(createProjectDto: CreateProjectDto, user: User) {
     try {
-      
-      const { id_area } = createProjectDto;
       const proyect = await this.projectModel.create(createProjectDto);
 
       if (proyect) {
-        const area = await this.areaService.findOne(id_area);
-        area.projects.push(proyect._id);
-        await this.areaService.update(id_area, { projects: area.projects });
 
         await this.logService.create({
           entityType: 'Project',
@@ -40,17 +36,26 @@ export class ProjectService {
         });
       }
       return proyect;
-      
+
     } catch (error) {
       console.error(error)
       throw error;
     }
   }
 
-  async findAll() {
+  async findAll(paginationQueryDto: PaginationQueryDto): Promise<PaginationResult<Project>> {
+    const { limit=10, page, order, sortBy } = paginationQueryDto;
     try {
-      const proyecto = await this.projectModel.find().exec();
-      return proyecto;
+      const projects = await this.projectModel.find().limit(limit).skip((page - 1) * limit).sort({ [sortBy]: order === Order.ASC ? 1 : -1 }).select('-__v').exec();
+      const totalproyects = await this.projectModel.countDocuments().exec();
+      return {
+        data: projects,
+        limit,
+        page,
+        totalPages: Math.ceil(totalproyects / limit),
+        total: totalproyects
+        // currentPage:0
+      };
     } catch (error) {
       throw error;
     }

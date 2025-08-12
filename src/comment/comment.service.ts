@@ -12,22 +12,14 @@ export class CommentService {
   constructor(
     @InjectModel(Comment.name)
     private readonly commentModel: Model<Comment>,
-    private readonly projectService: ProjectService 
   ){}
 
   async create(createCommentDto: CreateCommentDto, user: User) {
     try {
-      const { id_project } = createCommentDto;
       const comment = await this.commentModel.create(createCommentDto)
-      if(comment){
-
-        const project = await this.projectService.findOne(id_project);
-        project.comments.push(comment._id);
-        await this.projectService.update(id_project, { comments: project.comments }, user)
-        
-      }
       return comment;
-    } catch (error) {
+      }
+     catch (error) {
       throw error
     }
   }

@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { ProjectService} from './project.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { User } from 'src/user/entities/user.entity';
 import { AuthJwt } from 'src/auth/decorators/auth-jwt.decorator';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 
 @Controller('project')
 export class ProjectController {
@@ -17,8 +18,10 @@ export class ProjectController {
   }
 
   @Get()
-  findAll() {
-    return this.projectService.findAll();
+  findAll(
+    @Query() paginationQueryDto: PaginationQueryDto
+  ) {
+    return this.projectService.findAll(paginationQueryDto);
   }
 
   @Get(':id')

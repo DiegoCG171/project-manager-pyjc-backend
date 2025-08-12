@@ -4,6 +4,8 @@ import { UpdateStatusAssignamentDto } from './dto/update-status_assignament.dto'
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { StatusAssignament } from './entities/status_assignament.entity';
+import { Order, PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { PaginationResult } from 'src/common/interface/pagination-result.interface';
 
 @Injectable()
 export class StatusAssignamentService {
@@ -20,10 +22,19 @@ export class StatusAssignamentService {
     }
   }
 
-  async findAll() {
+  async findAll(paginationQueryDto: PaginationQueryDto): Promise<PaginationResult<StatusAssignament>>{
+    const { limit=10, page, order, sortBy } = paginationQueryDto;
     try {
-      const staus = await this.statusAssignamentModel.find().exec();
-      return staus;
+      const status = await this.statusAssignamentModel.find().limit(limit).skip((page - 1) * limit).sort({ [sortBy]: order === Order.ASC ? 1 : -1 }).select('-__v').exec();
+      const totalstatus = await this.statusAssignamentModel.countDocuments().exec();
+      return {
+        data: status,
+        limit,
+        page,
+        totalPages: Math.ceil(totalstatus / limit),
+        total: totalstatus
+        // currentPage:0
+      };
     } catch (error) {
       throw error;
     }

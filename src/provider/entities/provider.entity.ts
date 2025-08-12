@@ -7,6 +7,9 @@ export class Provider {
     @Prop({type:String, default:uuidv4})
     _id:string;
 
+    @Prop({ type: [String] })
+    projects: string[];
+
     @Prop({type:String})
     name: string;
 

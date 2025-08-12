@@ -4,6 +4,8 @@ import { UpdateProviderDto } from './dto/update-provider.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Provider } from './entities/provider.entity';
 import { Model } from 'mongoose';
+import { Order, PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { PaginationResult } from 'src/common/interface/pagination-result.interface';
 
 @Injectable()
 export class ProviderService {
@@ -20,10 +22,19 @@ export class ProviderService {
     }
   }
 
-  async findAll() {
+  async findAll(paginationQueryDto: PaginationQueryDto): Promise<PaginationResult<Provider>> {
+    const { limit = 10, page, order, sortBy } = paginationQueryDto;
     try {
-      const provider = await this.providerModel.find().exec();
-      return provider;
+      const providers = await this.providerModel.find().limit(limit).skip((page - 1) * limit).sort({ [sortBy]: order === Order.ASC ? 1 : -1 }).select('-__v').exec();
+      const totalproviders = await this.providerModel.countDocuments().exec();
+      return {
+        data: providers,
+        limit,
+        page,
+        totalPages: Math.ceil(totalproviders / limit),
+        total: totalproviders
+        // currentPage:0
+      };
     } catch (error) {
       throw error
     }

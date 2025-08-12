@@ -18,6 +18,8 @@ import { LogModule } from './log/log.module';
 import { AssignamentsModule } from './assignaments/assignaments.module';
 import { StatusAssignamentModule } from './status_assignament/status_assignament.module';
 import { PlataformModule } from './plataform/plataform.module';
+import { StatusProjectModule } from './status_project/status_project.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -52,6 +54,8 @@ import { PlataformModule } from './plataform/plataform.module';
     AssignamentsModule,
     StatusAssignamentModule,
     PlataformModule,
+    StatusProjectModule,
+    CommonModule,
   ],
   controllers: [],
   providers: [],
