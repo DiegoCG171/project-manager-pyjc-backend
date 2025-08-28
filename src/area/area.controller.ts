@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { AreaService } from './area.service';
 import { CreateAreaDto } from './dto/create-area.dto';
 import { UpdateAreaDto } from './dto/update-area.dto';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 
 @Controller('area')
 export class AreaController {
@@ -21,8 +23,8 @@ export class AreaController {
   }
 
   @Get()
-  findAll() {
-    return this.areaService.findAll();
+  findAll(@Query() paginationQueryDto: PaginationQueryDto) {
+    return this.areaService.findAll(paginationQueryDto);
   }
 
   @Get(':id')

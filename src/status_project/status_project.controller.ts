@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { StatusProjectService } from './status_project.service';
 import { CreateStatusProjectDto } from './dto/create-status_project.dto';
 import { UpdateStatusProjectDto } from './dto/update-status_project.dto';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 
 @Controller('status-project')
 export class StatusProjectController {
@@ -13,8 +14,8 @@ export class StatusProjectController {
   }
 
   @Get()
-  findAll() {
-    return this.statusProjectService.findAll();
+  findAll(@Query() paginationQueryDto: PaginationQueryDto) {
+    return this.statusProjectService.findAll(paginationQueryDto);
   }
 
   @Get(':id')

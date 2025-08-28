@@ -22,7 +22,7 @@ export class PlataformService {
     }
   }
 
-  async findAll(): Promise<PaginationResult<Plataform>> {
+  async findAll(paginationQueryDto: PaginationQueryDto): Promise<PaginationResult<Plataform>> {
       const { limit=10, page, order, sortBy } = paginationQueryDto;
       try {
         const plataforms = await this.plataformModel.find().limit(limit).skip((page - 1) * limit).sort({ [sortBy]: order === Order.ASC ? 1 : -1 }).select('-__v').exec();
@@ -33,7 +33,6 @@ export class PlataformService {
           page,
           totalPages: Math.ceil(totalplataforms / limit),
           total: totalplataforms
-          // currentPage:0
         };} catch (error) {
       throw error
     }

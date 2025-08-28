@@ -6,6 +6,8 @@ import { Assignament } from './entities/assignament.entity';
 import { Model } from 'mongoose';
 import { ProjectService } from 'src/project/project.service';
 import { User } from 'src/user/entities/user.entity';
+import { Order, PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { PaginationResult } from 'src/common/interface/pagination-result.interface';
 
 @Injectable()
 export class AssignamentsService {
@@ -24,12 +26,19 @@ export class AssignamentsService {
     }
   }
 
-  async findAll() {
+  async findAll(paginationQueryDto: PaginationQueryDto): Promise<PaginationResult<Assignament>>{
+    const { limit=10, page, order, sortBy } = paginationQueryDto;
     try {
-      const assignament = await this.assignamentModel.find().exec();
-      return assignament;
-    } catch (error) {
-      throw error;
+      const assignament = await this.assignamentModel.find().limit(limit).skip((page - 1) * limit).sort({ [sortBy]: order === Order.ASC ? 1 : -1 }).select('-__v').exec();
+      const totalassignaments = await this.assignamentModel.countDocuments().exec();
+      return {
+          data: assignament,
+          limit,
+          page,
+          totalPages: Math.ceil(totalassignaments / limit),
+          total: totalassignaments
+        };} catch (error) {
+      throw error
     }
   }
 

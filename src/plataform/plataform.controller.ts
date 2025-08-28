@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { PlataformService } from './plataform.service';
 import { CreatePlataformDto } from './dto/create-plataform.dto';
 import { UpdatePlataformDto } from './dto/update-plataform.dto';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 
 @Controller('plataform')
 export class PlataformController {
@@ -13,8 +14,8 @@ export class PlataformController {
   }
 
   @Get()
-  findAll() {
-    return this.plataformService.findAll();
+  findAll(@Query() paginationQueryDto: PaginationQueryDto) {
+    return this.plataformService.findAll(paginationQueryDto);
   }
 
   @Get(':id')

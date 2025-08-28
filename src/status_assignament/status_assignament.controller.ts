@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { StatusAssignamentService } from './status_assignament.service';
 import { CreateStatusAssignamentDto } from './dto/create-status_assignament.dto';
 import { UpdateStatusAssignamentDto } from './dto/update-status_assignament.dto';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 
 @Controller('status-assignament')
 export class StatusAssignamentController {
@@ -13,8 +14,8 @@ export class StatusAssignamentController {
   }
 
   @Get()
-  findAll() {
-    return this.statusAssignamentService.findAll();
+  findAll(@Query() paginationQueryDto: PaginationQueryDto) {
+    return this.statusAssignamentService.findAll(paginationQueryDto);
   }
 
   @Get(':id')

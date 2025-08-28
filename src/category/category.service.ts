@@ -5,6 +5,8 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Category, CategoryDocument } from './entities/category.entity';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import { Order, PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { PaginationResult } from 'src/common/interface/pagination-result.interface';
 
 @Injectable()
 export class CategoryService {
@@ -22,12 +24,19 @@ export class CategoryService {
     }
   }
 
-  async findAll() {
+  async findAll(paginationQueryDto: PaginationQueryDto): Promise<PaginationResult<Category>>{
+    const { limit=10, page, order, sortBy } = paginationQueryDto;
     try {
-      const categories = await this.categoryModel.find().exec();
-      return categories;
-    } catch (error) {
-      throw error;
+      const categories = await this.categoryModel.find().limit(limit).skip((page - 1) * limit).sort({ [sortBy]: order === Order.ASC ? 1 : -1 }).select('-__v').exec();
+      const totalcategories = await this.categoryModel.countDocuments().exec();
+      return {
+          data: categories,
+          limit,
+          page,
+          totalPages: Math.ceil(totalcategories / limit),
+          total: totalcategories
+        };} catch (error) {
+      throw error
     }
   }
 

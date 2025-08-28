@@ -6,6 +6,8 @@ import { Comment } from './entities/comment.entity';
 import { Model } from 'mongoose';
 import { ProjectService } from 'src/project/project.service';
 import { User } from 'src/user/entities/user.entity';
+import { Order, PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { PaginationResult } from 'src/common/interface/pagination-result.interface';
 
 @Injectable()
 export class CommentService {
@@ -24,11 +26,18 @@ export class CommentService {
     }
   }
 
-  async findAll() {
+  async findAll(paginationQueryDto: PaginationQueryDto):Promise<PaginationResult<Comment>> {
+    const { limit=10, page, order, sortBy } = paginationQueryDto;
     try {
-      const comment = await this.commentModel.find().exec()
-      return comment;
-    } catch (error) {
+      const comment = await this.commentModel.find().limit(limit).skip((page - 1) * limit).sort({ [sortBy]: order === Order.ASC ? 1 : -1 }).select('-__v').exec();
+      const totalcomments = await this.commentModel.countDocuments().exec();
+      return {
+          data: comment,
+          limit,
+          page,
+          totalPages: Math.ceil(totalcomments / limit),
+          total: totalcomments
+        };} catch (error) {
       throw error
     }
   }

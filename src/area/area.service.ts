@@ -4,13 +4,15 @@ import { UpdateAreaDto } from './dto/update-area.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Area } from './entities/area.entity';
 import { Model } from 'mongoose';
+import { Order, PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { PaginationResult } from 'src/common/interface/pagination-result.interface';
 
 @Injectable()
 export class AreaService {
   constructor(
     @InjectModel(Area.name)
     private readonly areaModel: Model<Area>,
-  ) {}
+  ) { }
 
   async create(createAreaDto: CreateAreaDto) {
     try {
@@ -21,12 +23,20 @@ export class AreaService {
     }
   }
 
-  async findAll() {
+  async findAll(paginationQueryDto: PaginationQueryDto): Promise<PaginationResult<Area>> {
+    const { limit = 10, page, order, sortBy } = paginationQueryDto;
     try {
-      const areas = await this.areaModel.find().exec();
-      return areas;
+      const areas = await this.areaModel.find().limit(limit).skip((page - 1) * limit).sort({ [sortBy]: order === Order.ASC ? 1 : -1 }).select('-__v').exec();
+      const totalareas = await this.areaModel.countDocuments().exec();
+      return {
+        data: areas,
+        limit,
+        page,
+        totalPages: Math.ceil(totalareas / limit),
+        total: totalareas
+      };
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
