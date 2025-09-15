@@ -44,9 +44,6 @@ export class Project {
     @Prop({type:String})
     status_project:string;
 
-    @Prop({ type: [String] })
-    providers: string[];
-
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project)

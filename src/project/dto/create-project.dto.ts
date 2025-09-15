@@ -40,9 +40,4 @@ export class CreateProjectDto {
 
     @IsString()
     status_project: string;
-
-    @IsArray()
-    @IsString({ each: true })
-    providers: string[];
-
 }

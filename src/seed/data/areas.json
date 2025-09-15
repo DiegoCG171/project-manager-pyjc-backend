@@ -1,0 +1,12 @@
+[
+    {
+        "_id": "2867e8fd-70db-4326-8fe9-81c307eb5263",
+        "name": "Gestor",
+        "leader": "Gloria",
+        "projects": [
+            "b2931c66-4546-4c5d-8573-1449a1910ba9"
+        ],
+        "order": 1,
+        "category": "Gestores"
+    }
+]

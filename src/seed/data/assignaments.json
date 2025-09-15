@@ -1,0 +1,17 @@
+[
+    {
+        "_id":"aa44a479-64ce-462c-9b64-17ce538ecae3",
+        "id_project":"b2931c66-4546-4c5d-8573-1449a1910ba9",
+        "id_user":"d4e00756-d9ac-41f3-99b7-c22ad6262af3",
+        "id_plataform":"37bbccd2-718d-4cf1-a792-562ddd2fc5b4",
+        "plataform_activity":"Online",
+        "id_status":"7cbc7027-9fe4-46b7-bca4-2acecbd338bd",
+        "percentage":12,
+        "hours":13,
+        "hours_per_day":12,
+        "extra_hours":20,
+        "start_date":"2025-06-17",
+        "finish_date":"2025-06-28",
+        "test_cases":2
+    }
+]
